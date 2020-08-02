@@ -1,77 +1,69 @@
-import React, { Component } from 'react'
-import { Text, StyleSheet, View, TextInput, TouchableOpacity, Image } from 'react-native'
-
+import React, { Component } from "react";
+import { firebaseAuth } from "./../environment/Config";
+import { Text, StyleSheet, View, TouchableOpacity } from "react-native";
 
 export default class ChatScreen extends React.Component {
+  logout = () => {
+    firebaseAuth.signOut();
+    // this.props.navigation.navigate("Login");
+  };
 
-    state = {
-        name: "madhu"
-    }
+  componentDidMount() {
+    const user = firebaseAuth.currentUser;
+    console.log(user)
+  }
 
-    continue = () => {
-        this.props.navigation.navigate("Login", { name: this.state.name })
-    }
+  chatScreen = () => {
+    this.props.navigation.navigate("ChatBody");
+  };
 
-    render() {
-        return (
-            <View style={styles.container}>
-                <View style={styles.circle} />
-                <View style={{ marginTop: 100 }}>
-                    <Image
-                        source={require("../assets/my.png")}
-                        style={{ width: 100, height: 100, alignSelf: "center" }} />
-                </View>
-                <View style = {{marginHorizontal: 32}}>
-                    <Text style = { styles.header}>name</Text>
-                    <TextInput style = {styles.input} placeholder=" Name" onChangeText= {name => { this.setState({name})}} value={this.state.name} />
-                </View>
-                <View style= {{alignItems:"flex-end", marginTop: 70}}>
-                    <TouchableOpacity style={styles.continue} onPress = {this.continue}>
-                        
-                    </TouchableOpacity>
-                </View>
-
+  render() {
+    return (
+      <View style={styles.container}>
+        <View style={styles.topbar}>
+          <Text
+            style={{
+              fontSize: 20,
+              padding: 10,
+              alignSelf: "flex-start",
+              position: "absolute",
+            }}
+          >
+            {this.user}
+          </Text>
+          <TouchableOpacity
+            onPress={this.logout}
+            style={{ alignSelf: "flex-end" }}
+          >
+            <Text style={{ fontSize: 16, padding: 12 }}>LogOut</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.body}>
+          <TouchableOpacity onPress={this.chatScreen}>
+            <View style={styles.chat}>
+              <Text>ChatNo 1</Text>
             </View>
-        )
-    }
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "#F4F5F7"
-    },
-    circle: {
-        width: 400,
-        height: 400,
-        borderRadius: 200,
-        backgroundColor: "cyan",
-        position: "absolute",
-        left: -50,
-        top: 50
-    },
-    header:{
-        
-        fontSize: 30,
-        color : "black",
-        marginTop: 32,
-    },
-    input:{
-        fontSize: 25,
-        marginTop: 32,
-        height: 50,
-        borderStyle :"solid",
-        borderColor: "black",
-        borderWidth: 1,
-        borderRadius: 25,
-        padding: 10
-
-    },
-    continue: {
-        width: 70,
-        height: 70,
-        backgroundColor: "black",
-        alignItems: "center",
-        justifyContent: "center"
-    }
-})
+  container: {
+    backgroundColor: "white",
+  },
+  topbar: {
+    backgroundColor: "cyan",
+    height: 50,
+  },
+  chat: {
+    backgroundColor: "pink",
+    height: 75,
+    marginTop: 1,
+  },
+  body: {
+    backgroundColor: "white",
+  },
+});

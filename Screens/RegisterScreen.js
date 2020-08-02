@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { firebaseAuth } from "./../environment/Config";
 
+
 import {
   Text,
   StyleSheet,
@@ -10,21 +11,23 @@ import {
   Image,
 } from "react-native";
 
-export default class loginScreen extends React.Component {
+export default class RegisterScreen extends React.Component {
   state = {
+    name: "",
     email: "",
     password: "",
+    repassword: "",
   };
 
-  // continue = () => {
-  //   firebaseAuth
-  //     .signInWithEmailAndPassword(this.state.email, this.state.password)
-  //     .then(() => this.props.navigation.navigate("Chat"))
-  //     .catch((error) => this.setState({ errorMessage: error.message }));
-  // };
+  writeUserData = () => {
+    return 0;
+  };
 
-  back = () => {
-    this.props.navigation.navigate("Register");
+  signIn = () => {
+    firebaseAuth
+      .createUserWithEmailAndPassword(this.state.email, this.state.password)
+      .then(() => this.props.navigation.navigate("Login"))
+      .catch((error) => console.log(error));
   };
 
   render() {
@@ -36,7 +39,17 @@ export default class loginScreen extends React.Component {
             style={{ width: 180, height: 100, alignSelf: "center" }}
           />
         </View>
-
+        <View style={{ marginHorizontal: 32, marginTop: 20 }}>
+          <Text style={styles.header}>User Name</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Name"
+            onChangeText={(name) => {
+              this.setState({ name });
+            }}
+            value={this.state.name}
+          />
+        </View>
         <View style={{ marginHorizontal: 32 }}>
           <Text style={styles.header}>Email Address</Text>
           <TextInput
@@ -60,18 +73,25 @@ export default class loginScreen extends React.Component {
             value={this.state.password}
           />
         </View>
-        <View>
-          <View style={{ alignItems: "flex-start", margin: 30 ,width : 40 }}>
-            <TouchableOpacity style={styles.continue} onPress={this.back}>
-              <Text style={{ fontSize: 20 }}>Register</Text>
-            </TouchableOpacity>
-          </View>
-
-          <View style={{ alignItems: "flex-end", margin: 30 }}>
-            <TouchableOpacity style={styles.continue} onPress={this.continue}>
-              <Text style={{ fontSize: 20 }}>Login</Text>
-            </TouchableOpacity>
-          </View>
+        <View style={{ marginHorizontal: 32 }}>
+          <Text style={styles.header}>Confirm Password</Text>
+          <TextInput
+            textContentType="password"
+            style={styles.input}
+            placeholder="retype-Password"
+            onChangeText={(repassword) => {
+              this.setState({ repassword });
+            }}
+            value={this.state.repassword}
+          />
+        </View>
+        <View style={{ alignItems: "flex-end", margin: 30 }}>
+          <TouchableOpacity
+            style={styles.continue}
+            onPress={this.writeUserData()}
+          >
+            <Text style={{ fontSize: 20 }}>Register</Text>
+          </TouchableOpacity>
         </View>
       </View>
     );
