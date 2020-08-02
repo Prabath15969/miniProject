@@ -20,3 +20,20 @@ export default class ChatScreen extends React.Component {
   
 }
 
+const styles = StyleSheet.create({
+    container: {
+      backgroundColor: "white",
+    },
+    topbar: {
+      backgroundColor: "cyan",
+      height: 50,
+    },
+    chat: {
+      backgroundColor: "pink",
+      height: 75,
+      marginTop: 1,
+    },
+    body: {
+      backgroundColor: "white",
+    },
+  });
