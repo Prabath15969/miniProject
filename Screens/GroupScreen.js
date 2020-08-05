@@ -65,5 +65,6 @@ const styles = StyleSheet.create({
   },
   body: {
     backgroundColor: "white",
+    backfaceVisibility: "visible"
   },
 });
