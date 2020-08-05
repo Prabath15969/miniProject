@@ -16,12 +16,12 @@ export default class loginScreen extends React.Component {
     password: "",
   };
 
-  // continue = () => {
-  //   firebaseAuth
-  //     .signInWithEmailAndPassword(this.state.email, this.state.password)
-  //     .then(() => this.props.navigation.navigate("Chat"))
-  //     .catch((error) => this.setState({ errorMessage: error.message }));
-  // };
+  continue = () => {
+    firebaseAuth
+      .signInWithEmailAndPassword(this.state.email, this.state.password)
+      .then(() => this.props.navigation.navigate("Chat"))
+      .catch((error) => this.setState({ errorMessage: error.message }));
+  };
 
   back = () => {
     this.props.navigation.navigate("Register");
